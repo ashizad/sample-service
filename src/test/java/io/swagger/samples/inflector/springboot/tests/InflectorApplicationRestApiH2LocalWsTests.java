@@ -9,7 +9,7 @@ import io.swagger.samples.inflector.springboot.SpringProfileCucumber;
 
 @RunWith(SpringProfileCucumber.class)
 @CucumberOptions(plugin = { "pretty" }, features = { "src/test/resources/features" }, strict = false, glue = {
-		"io.swagger.samples.inflector.springboot" }, snippets = SnippetType.CAMELCASE)
+		"io.swagger.samples.inflector.springboot" }, snippets = SnippetType.CAMELCASE, tags= {"@wip"})
 @ActiveProfiles({ "integrationTest", "restApi", "h2", "localWs" })
 public class InflectorApplicationRestApiH2LocalWsTests {
 

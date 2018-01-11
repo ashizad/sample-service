@@ -1,8 +1,10 @@
 package io.swagger.samples.inflector.springboot;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.contains;
+import static org.junit.Assert.assertThat;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,6 +26,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.swagger.samples.inflector.springboot.client.SampleServiceClient;
 import io.swagger.samples.inflector.springboot.models.Resource;
+import io.swagger.samples.inflector.springboot.models.UserDetail;
+import static org.assertj.core.api.Java6Assertions.*;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = { InflectorApplication.class, TestConfiguration.class })
@@ -85,13 +89,17 @@ public class StepDefs {
 		throw new PendingException();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Then("^I'll get the following user details$")
-	public void iLlGetTheFollowingUserDetails(DataTable arg1) throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		// For automatic transformation, change DataTable to one of
-		// List<YourType>, List<List<E>>, List<Map<K,V>> or Map<K,V>.
-		// E,K,V must be a scalar (String, Integer, Date, enum etc)
-		throw new PendingException();
+	public void iLlGetTheFollowingUserDetails(List<UserDetail> userDetails) throws Throwable {
+		UserDetail expectedUSer = new UserDetail("John","Doe","1768-01-01");
+		UserDetail  user = userDetails.stream().findAny().get();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
+		LocalDateTime date = LocalDateTime.parse(user.getDob(), formatter);
+		user.setDob(date.toString());
+		assertThat(user.equals(expectedUSer)).isTrue();
+		
+		//Assert.assertEquals(expectedUSer, user);
 	}
 
 	@When("^set the preferred name to \"([^\"]*)\"$")

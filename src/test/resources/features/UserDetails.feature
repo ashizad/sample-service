@@ -5,16 +5,16 @@ Feature: User Details
   I want the User Details API to provide me with my details
 
   # NOTE: The system is designed for only a single user
+  @wip
   Scenario: Get User Details
     Given The User table has the following entry
       | Name | Doe, John   |
       | DoB  | 01/Jan/1768 |
     When I request the User Details API
     Then I'll get the following user details
-      | Surname 		| Doe 			  | 
-      | GivenName   | John      	| 
-      | DoB 				| 1768-01-01  |
-      
+      | Surname | GivenName | DoB        |
+      | Doe     | John      | 1768-01-01 |
+
   Scenario: Set Preferred Name
     Given The User table has the following entry
       | Name      | DoB         |
